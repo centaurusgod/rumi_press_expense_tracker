@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .add-books-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .image-section {
+            flex: 0 0 auto;
+            margin-right: 20px;
+        }
+
+        .image-section img {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .details-section {
+            flex: 1 1 auto;
+        }
+
+        .title {
+            margin: 0 0 5px;
+        }
+
+        .author {
+            margin: 0;
+            font-style: italic;
+            color: #666;
+        }
+
+        .total-books {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .view-edit-btn {
+            padding: 8px 15px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        /* Remaining styles are unchanged */
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* Align items to start and end of the row */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Available Books</h1>
+            <a href="{% url 'add_books' %}">
+                <button  class="add-books-btn">Add More Books</button>
+
+            </a>
+
+        </div>
+
+
+        <div class="list-view">
+            {% for book in books %}
+            <div class="list-item">
+
+                <div class="image-section">
+                    <img src="{% static book.book_image %}" alt="Book Image">
+                </div>
+
+                <div class="details-section">
+                    <h3 class="title">{{ book }}</h3>
+                    <h4 class="author">{{ book.book_auth_name }}</h4>
+                    <p class="total-books">Total Available Books: <strong>{{ book.book_num }}</strong></p>
+                    <p class="total-books">Unit Distribution Expenses: Rs.<strong>{{ book.distribution_expenses }}</strong></p>
+                </div>
+                <button class="view-edit-btn">View/Edit</button>
+
+            </div>
+            <!-- Add more list items here -->
+            {% endfor %}
+        </div>
+        <footer class="footer">
+            <!-- Footer content -->
+        </footer>
+    </div>
+</body>
+
+</html>
