@@ -107,14 +107,14 @@
         <div class="header">
             <h1>Available Books</h1>
             <a href="{% url 'add_books' %}">
-                <button  class="add-books-btn">Add More Books</button>
+                <button class="add-books-btn">Add More Books</button>
 
             </a>
 
         </div>
         <ol class="breadcrumb">
-           <a href="{% url 'home_page' %}">Dashboard</a>
-          </ol>
+            <a href="{% url 'home_page' %}">Dashboard</a>
+        </ol>
 
         <div class="list-view">
             {% for book in books %}
@@ -128,7 +128,8 @@
                     <h3 class="title">{{ book }}</h3>
                     <h4 class="author">{{ book.book_auth_name }}</h4>
                     <p class="total-books">Total Available Books: <strong>{{ book.book_num }}</strong></p>
-                    <p class="total-books">Unit Distribution Expenses: Rs.<strong>{{ book.distribution_expenses }}</strong></p>
+                    <p class="total-books">Unit Distribution Expenses: Rs.<strong>{{ book.distribution_expenses
+                            }}</strong></p>
                 </div>
                 <button class="view-edit-btn">View/Edit</button>
 

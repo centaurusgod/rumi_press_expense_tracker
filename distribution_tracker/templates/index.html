@@ -99,8 +99,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'view_books' %}">Books</a></li>
-                                <li><a class="dropdown-item" href="#">Book Categories</a></li>
-
+                                <li><a class="dropdown-item" href="{% url 'add_book_cat' %}">Book Categories</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -109,8 +108,8 @@
                                 Add to Warehouse
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Add Books</a></li>
-                                <li><a class="dropdown-item" href="#">Add Book Categories</a></li>
+                                <li><a class="dropdown-item" href="{% url 'add_books' %}">Add Books</a></li>
+                                <li><a class="dropdown-item" href="{% url 'add_book_cat' %}">Add Book Categories</a></li>
 
                             </ul>
                         </li>

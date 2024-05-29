@@ -92,4 +92,16 @@ def add_books(request):
         return render(request, "add_books.html", {"cat_name": cat_name})
     return redirect("user_login")
 
-# def view_book_cat(request):
+def add_book_cat(request):
+    cat_name_obj = BookCat.objects.all()
+    if request.method=="POST":
+        print("sdads")
+        cat_name = request.POST['cat_name']
+        print(cat_name)
+        book_cat_obj = BookCat()
+        book_cat_obj.cat_name = cat_name
+        try:
+            book_cat_obj.save()
+        except Exception as e:
+            print(e)
+    return render(request, 'add_book_cat.html',{'cat_name':cat_name_obj})
