@@ -23,9 +23,9 @@
             border: 1px solid #ced4da;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 400px;
             /* Adjust width as needed */
-            height: 500px;
+            height: 620px;
             /* Ensure the box is square */
             display: flex;
             flex-direction: column;
@@ -49,11 +49,11 @@
 
 <body>
     <div class="form-container">
-        <form  method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <label for="exampleInputEmail1">Book Name</label>
-                <input required name="username" class="form-control" aria-describedby="emailHelp"
+                <input name="book_name" required name="username" class="form-control" aria-describedby="emailHelp"
                     placeholder="Enter Book Name">
             </div>
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,51 +61,104 @@
             </a>
             <ul  class="dropdown-menu">
                 {% for category in cat_name %}
-                <li><a class="dropdown-item" href="#">{{ category }}</a></li>
+                <li><a class="dropdown-item" href="#" onclick="selectCategory('{{ category }}')">{{ category }}</a></li>
                 {% endfor %}
             </ul>
+            <div class="form-group">
+                <input id="selectedCategory" hidden value="Category" type="text" name="book_cat" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <input hidden value="Category" type="text" class="form-control">
+            </div>
+
             <ul></ul>
             <div class="form-group">
                 <label for="exampleInputPassword1">Total Number</label>
-                <input required name="distribution_expenses" type="number" class="form-control">
+                <input required name="book_num" type="number" class="form-control">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Author</label>
-                <input required name="distribution_expenses" type="text" class="form-control">
+                <input required name="book_auth_name" type="text" class="form-control">
             </div>
-           
+
             <div class="form-group">
                 <label for="exampleInputPassword1">Distribution_expenses</label>
-                <input required name="image-section" type="number" class="form-control">
+                <input name="distribution_expenses" required type="number" class="form-control">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1"><button type="button">Choose Image</button></label>
-                <!-- <input name="distribution_expenses" type="image" class="form-control"> -->
-                
+                <label for="exampleInputPassword1">
+                    <button id="uploadButton" type="button">Choose Image</button>
+                </label>
+                <input required name="book_image" id="imageInput" type="file" accept="image/*" style="display: none;">
             </div>
-            <p hidden>asd</p>
+            <div id="previewContainer"></div>
+            <div id="fileNameContainer"></div>
+            
+
+
+
             <ul></ul>
             <button type="submit" class="btn btn-primary btn-flat">Save</button>
-
-            
         </form>
+        <ul></ul>
+        {% if save_sucess %}
+        <div class="alert alert-success" role="alert">
+            Saved Sucessfully!  <a href="{% url 'view_books' %}" class="alert-link">Back to View Books?</a>
+          </div>
+        {% endif %}  
     </div>
 
     <script>
         // Get all dropdown items
         var dropdownItems = document.querySelectorAll('.dropdown-item');
-    
+
         // Add click event listener to each dropdown item
-        dropdownItems.forEach(function(item) {
-            item.addEventListener('click', function() {
+        dropdownItems.forEach(function (item) {
+            item.addEventListener('click', function () {
                 // Get the text of the clicked dropdown item
                 var selectedItem = item.textContent.trim();
-                
+
                 // Set the text of the dropdown trigger to the selected item
                 var dropdownTrigger = document.querySelector('.dropdown-toggle');
                 dropdownTrigger.textContent = selectedItem;
             });
         });
+        document.addEventListener("DOMContentLoaded", function () {
+            // Function to handle image preview
+            function previewImage(event) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var preview = document.createElement('img');
+                    preview.src = reader.result;
+                    preview.style.maxWidth = "100px"; // Adjust preview size as needed
+                    preview.style.maxHeight = "100px";
+                    document.getElementById('previewContainer').innerHTML = ''; // Clear previous previews
+                    document.getElementById('previewContainer').appendChild(preview);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+
+                // Display file name above the preview
+                var fileName = event.target.files[0].name;
+                document.getElementById('fileNameContainer').innerText = fileName;
+            }
+
+            // Event listener for file input change
+            document.getElementById('imageInput').addEventListener('change', function (event) {
+                previewImage(event);
+            });
+
+            // Event listener for button click to trigger file input click
+            document.getElementById('uploadButton').addEventListener('click', function () {
+                document.getElementById('imageInput').click();
+            });
+        });
+
+        function selectCategory(category) {
+            document.getElementById('selectedCategory').value = category;
+        }
+
+
     </script>
 </body>
 
