@@ -23,7 +23,7 @@
                 <!-- add category text field  -->
                 <form method="post">
                     {% csrf_token %}
-                    <input type="text" id="add_category_text" maxlength="20" name="cat_name" required="">
+                    <input type="text" id="add_category_text" maxlength="20" name="cat_name_add" required="">
                     <button class="btn btn-success btn-sm edit btn-flat"><i class="fa fa-plus"></i> Add
                         Category</button>
                     </a>
@@ -44,25 +44,31 @@
                         <table id="example1" class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Category Name</th>
-                                    
+                                    <th>Action</th>
+
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for category in cat_name %}
-                                <tr>
-                                    <td>{{ category.id }}</td>
-                            <td>{{ category.cat_name }}</td>
-                            
-                                    <td><button class="btn btn-success btn-sm edit btn-flat"><i class="fa fa-edit"></i>
-                                            Edit</button>
-                                        <!-- <button class='btn btn-danger btn-sm delete btn-flat'><i class='fa fa-trash'></i> Delete</button> -->
-                                        <a href="#" class="btn btn-danger btn-sm delete btn-flat"
-                                            onclick="return confirm('Are you want to delete?')"><i
-                                                class="fa fa-trash"></i> Delete</a>
-                                    </td>
-                                </tr>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <tr>
+                                        <input type="number" name="cat_id" hidden value="{{ category.id }}">
+                                        <input type="text" name="cat_name" hidden value="{{ category.cat_name }}">
+                                        <td>{{ category.cat_name }}</td>
+
+                                        <td><button type="submit" class="btn btn-success btn-sm edit btn-flat"><i
+                                                    class="fa fa-edit"></i>
+                                                Edit</button>
+                                            <!-- <button class='btn btn-danger btn-sm delete btn-flat'><i class='fa fa-trash'></i> Delete</button> -->
+                                            <button type="submit" class="btn btn-danger btn-sm edit btn-flat"><i
+                                                class="fa fa-edit"></i>
+                                            Delete</button>
+                                        </td>
+                                    </tr>
+                                </form>
                                 {% endfor %}
 
                             </tbody>

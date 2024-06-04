@@ -11,7 +11,7 @@ class Books(models.Model):
     book_name = models.CharField(max_length=254)
     book_auth_name = models.CharField(max_length=254, default="Author")
     book_cat = models.ForeignKey(BookCat, on_delete=models.CASCADE)
-    distribution_expenses = models.CharField(max_length=254)
+    distribution_expenses = models.IntegerField()
     book_image = models.ImageField(upload_to='images')
     book_num = models.IntegerField(default=1)
     
